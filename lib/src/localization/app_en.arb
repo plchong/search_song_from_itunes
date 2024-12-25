@@ -1,0 +1,6 @@
+{
+  "appTitle": "search_song_from_itunes",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
