@@ -164,7 +164,7 @@ class SampleItemListView extends StatefulWidget {
 class _SampleItemListViewState extends State<SampleItemListView> {
   List<Track> originalTrackList = []; // Store the original list
   List<Track> trackList = []; // This will be filtered
-  // String sortBy = 'song'; // Default sorting by song name
+  String sortBy = 'song'; // Default sorting by song name
 
   static const routeName = '/';
 
@@ -195,18 +195,18 @@ class _SampleItemListViewState extends State<SampleItemListView> {
     }
   }
 
-  // void searchTracks(String query) {
-  //   if (query.isEmpty) {
-  //     trackList = List.from(originalTrackList); // Reset to original
-  //   } else {
-  //     trackList = originalTrackList.where((track) {
-  //       final lowerCaseQuery = query.toLowerCase();
-  //       return track.trackName.toLowerCase().contains(lowerCaseQuery) ||
-  //           track.collectionName.toLowerCase().contains(lowerCaseQuery);
-  //     }).toList();
-  //   }
-  //   setState(() {}); // Refresh the UI
-  // }
+  void searchTracks(String query) {
+    if (query.isEmpty) {
+      trackList = List.from(originalTrackList); // Reset to original
+    } else {
+      trackList = originalTrackList.where((track) {
+        final lowerCaseQuery = query.toLowerCase();
+        return track.trackName.toLowerCase().contains(lowerCaseQuery) ||
+            track.collectionName.toLowerCase().contains(lowerCaseQuery);
+      }).toList();
+    }
+    setState(() {}); // Refresh the UI
+  }
 
   // void sortTracks() {
   //   if (sortBy == 'song') {
@@ -228,78 +228,77 @@ class _SampleItemListViewState extends State<SampleItemListView> {
   Widget build(BuildContext context) {
     print('tracklist ${trackList}');
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Sample Items'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.restorablePushNamed(context, SettingsView.routeName);
+      appBar: AppBar(
+        title: const Text('Sample Items'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.restorablePushNamed(context, SettingsView.routeName);
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Row(
+          //       children: [
+          //         Radio<String>(
+          //           value: 'song',
+          //           groupValue: sortBy,
+          //           onChanged: handleSortChange,
+          //         ),
+          //         const Text('Sort by Song Name'),
+          //       ],
+          //     ),
+          //     Row(
+          //       children: [
+          //         Radio<String>(
+          //           value: 'album',
+          //           groupValue: sortBy,
+          //           onChanged: handleSortChange,
+          //         ),
+          //         const Text('Sort by Album Name'),
+          //       ],
+          //     ),
+          //   ],
+          // ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                labelText: 'Search Tracks',
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (value) {
+                searchTracks(value); // Perform search on input change
               },
             ),
-          ],
-        ),
-        body: Text('sss')
-        // Column(
-        //   children: [
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         Row(
-        //           children: [
-        //             Radio<String>(
-        //               value: 'song',
-        //               groupValue: sortBy,
-        //               onChanged: handleSortChange,
-        //             ),
-        //             const Text('Sort by Song Name'),
-        //           ],
-        //         ),
-        //         Row(
-        //           children: [
-        //             Radio<String>(
-        //               value: 'album',
-        //               groupValue: sortBy,
-        //               onChanged: handleSortChange,
-        //             ),
-        //             const Text('Sort by Album Name'),
-        //           ],
-        //         ),
-        //       ],
-        //     ),
-        //     Padding(
-        //       padding: const EdgeInsets.all(8.0),
-        //       child: TextField(
-        //         decoration: InputDecoration(
-        //           labelText: 'Search Tracks',
-        //           border: OutlineInputBorder(),
-        //         ),
-        //         onChanged: (value) {
-        //           searchTracks(value); // Perform search on input change
-        //         },
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: trackList.isEmpty
-        //           ? Center(child: CircularProgressIndicator())
-        //           : ListView.builder(
-        //               itemCount: trackList.length,
-        //               itemBuilder: (context, index) {
-        //                 final track = trackList[index];
-        //                 return ListTile(
-        //                   leading: Image.network(track.artworkUrl30),
-        //                   title: Text(track.trackName),
-        //                   subtitle: Text(track.artistName),
-        //                   onTap: () {
-        //                     // Handle tap
-        //                     print('Tapped on ${track.trackName}');
-        //                   },
-        //                 );
-        //               },
-        //             ),
-        //     ),
-        //   ],
-        // ),
-        );
+          ),
+          Expanded(
+            child: trackList.isEmpty
+                ? Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: trackList.length,
+                    itemBuilder: (context, index) {
+                      final track = trackList[index];
+                      return ListTile(
+                        leading: Image.network(track.artworkUrl30),
+                        title: Text(track.trackName),
+                        subtitle: Text(track.artistName),
+                        onTap: () {
+                          // Handle tap
+                          print('Tapped on ${track.trackName}');
+                        },
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
   }
 }
