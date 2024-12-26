@@ -208,21 +208,21 @@ class _SampleItemListViewState extends State<SampleItemListView> {
     setState(() {}); // Refresh the UI
   }
 
-  // void sortTracks() {
-  //   if (sortBy == 'song') {
-  //     trackList.sort((a, b) => a.trackName.compareTo(b.trackName));
-  //   } else if (sortBy == 'album') {
-  //     trackList.sort((a, b) => a.collectionName.compareTo(b.collectionName));
-  //   }
-  //   setState(() {}); // Refresh the UI after sorting
-  // }
+  void sortTracks() {
+    if (sortBy == 'song') {
+      trackList.sort((a, b) => a.trackName.compareTo(b.trackName));
+    } else if (sortBy == 'album') {
+      trackList.sort((a, b) => a.collectionName.compareTo(b.collectionName));
+    }
+    setState(() {}); // Refresh the UI after sorting
+  }
 
-  // void handleSortChange(String? value) {
-  //   setState(() {
-  //     sortBy = value ?? 'song'; // Update sort option
-  //     sortTracks(); // Sort the list based on new option
-  //   });
-  // }
+  void handleSortChange(String? value) {
+    setState(() {
+      sortBy = value ?? 'song'; // Update sort option
+      sortTracks(); // Sort the list based on new option
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,31 +241,31 @@ class _SampleItemListViewState extends State<SampleItemListView> {
       ),
       body: Column(
         children: [
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Row(
-          //       children: [
-          //         Radio<String>(
-          //           value: 'song',
-          //           groupValue: sortBy,
-          //           onChanged: handleSortChange,
-          //         ),
-          //         const Text('Sort by Song Name'),
-          //       ],
-          //     ),
-          //     Row(
-          //       children: [
-          //         Radio<String>(
-          //           value: 'album',
-          //           groupValue: sortBy,
-          //           onChanged: handleSortChange,
-          //         ),
-          //         const Text('Sort by Album Name'),
-          //       ],
-          //     ),
-          //   ],
-          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Radio<String>(
+                    value: 'song',
+                    groupValue: sortBy,
+                    onChanged: handleSortChange,
+                  ),
+                  const Text('Sort by Song Name'),
+                ],
+              ),
+              Row(
+                children: [
+                  Radio<String>(
+                    value: 'album',
+                    groupValue: sortBy,
+                    onChanged: handleSortChange,
+                  ),
+                  const Text('Sort by Album Name'),
+                ],
+              ),
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
