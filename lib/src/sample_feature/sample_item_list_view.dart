@@ -1,12 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
 import '../settings/settings_view.dart';
-import 'sample_item.dart';
-import 'sample_item_details_view.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -226,7 +222,6 @@ class _SampleItemListViewState extends State<SampleItemListView> {
 
   @override
   Widget build(BuildContext context) {
-    print('tracklist ${trackList}');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sample Items'),
